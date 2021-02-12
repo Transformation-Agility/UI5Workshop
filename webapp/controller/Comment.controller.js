@@ -50,20 +50,20 @@ sap.ui.define([
 					method: "DELETE",
 					success: function(data) {
 						var oEntry;
-
+						var mParameters = {batchGroupId:"batchGroup"};
+					oModel.setDeferredGroups(["batchGroup"]);
 						for (var i in aList) {
 							oEntry = {};
+						    mParameters = {batchGroupId:"batchGroup", changeSetId:"change " + i};
 							oEntry.WorkPackId = sWorkPackId;
 							oEntry.CommentNo = parseInt(i) + 1;
 							oEntry.CommentTxt = aList[i].getProperty("label");
 
 							//oModel.setHeaders({"content-type" : "application/json;charset=utf-8"});
-							oModel.create('/CommentSet', oEntry, null, function() {
-								//alert("Create successful");
-							}, function() {
-								//alert("Create failed");
-							});
+							oModel.create('/CommentFMSet', oEntry, mParameters);
 						}
+						mParameters = {batchGroupId:"batchGroup"};
+						oModel.submitChanges(mParameters);
 					}.bind(this),
 					error: function(e) {
 
