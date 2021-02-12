@@ -46,7 +46,7 @@ sap.ui.define([
 				//popup
 			} else {
 				sap.ui.core.BusyIndicator.show();
-				oModel.remove("/CommentSet(WorkPackId='" + sWorkPackId + "',CommentNo=1)", {
+				oModel.remove("/CommentFMSet(WorkPackId='" + sWorkPackId + "',CommentNo=1)", {
 					method: "DELETE",
 					success: function(data) {
 						var oEntry;
@@ -84,7 +84,7 @@ sap.ui.define([
 			var oResults = [];
 
 			var oModel = this.getOwnerComponent().getModel();
-			oModel.read("/CommentSet", {
+			oModel.read("/CommentFMSet", {
 				urlParameters: {
 					"$filter": sFilter
 				},
