@@ -1,0 +1,23 @@
+<mvc:View controllerName="ZWS_COMMENT_DEMO.controller.Comment" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m">
+	<App>
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+					<HBox>
+						<Input value="005056B7147D1EDABFB002A4A695D316" placeholder="Workpack" id="inputWorkPack" width="100%"/>
+						<Button text="Go" id="btnGo" press="onPressGo"/>
+					</HBox>
+					<Button text="Save" id="btnSave" press="onPressSave"/>
+					<List noDataText="No comments for now." id="listComment" inset="true" mode="Delete" delete="onDeleteItem"/>
+				</content>
+				<footer>
+					<Toolbar width="100%" id="toolbarFooter">
+						<Input value="" placeholder="New comment.." id="inputAddComment" liveChange="onLiveChangeAddComment"/>
+						<Button text="Add" id="buttonAddComment" press="onPressAddComment" enabled="false"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
