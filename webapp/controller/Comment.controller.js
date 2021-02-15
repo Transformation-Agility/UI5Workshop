@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/m/DisplayListItem"
-], function(Controller, DisplayListItem) {
+	"sap/m/DisplayListItem",
+	"sap/m/MessageToast"
+], function(Controller, DisplayListItem, MessageToast) {
 	"use strict";
 
 	return Controller.extend("ZWS_COMMENT_DEMO.controller.Comment", {
@@ -41,9 +42,13 @@ sap.ui.define([
 			var sWorkPackId = this.getView().byId("inputWorkPack").getValue();
 			var oModel = this.getOwnerComponent().getModel();
 			var aList = this.getView().byId("listComment").getItems();
-
+			var oBundle = this.getView().getModel("i18n").getResourceBundle();
+			
+			sap.ui.core.BusyIndicator.show();
+		
 			if (!sWorkPackId) {
-				//popup
+				var msg = "Please fill Workpack field!";
+				MessageToast.show(msg);
 			} else {
 				sap.ui.core.BusyIndicator.show();
 				oModel.remove("/CommentFMSet(WorkPackId='" + sWorkPackId + "',CommentNo=1)", {
@@ -51,7 +56,8 @@ sap.ui.define([
 					success: function(data) {
 						var oEntry;
 						var mParameters = {batchGroupId:"batchGroup"};
-					oModel.setDeferredGroups(["batchGroup"]);
+						
+						oModel.setDeferredGroups(["batchGroup"]);
 						for (var i in aList) {
 							oEntry = {};
 						    mParameters = {batchGroupId:"batchGroup", changeSetId:"change " + i};
@@ -64,14 +70,16 @@ sap.ui.define([
 						}
 						mParameters = {batchGroupId:"batchGroup"};
 						oModel.submitChanges(mParameters);
+						
+						MessageToast.show(oBundle.getText("commentAdded"));
+						sap.ui.core.BusyIndicator.hide();
 					}.bind(this),
 					error: function(e) {
-
+						MessageToast.show(oBundle.getText("commentDeleteError"));
+						sap.ui.core.BusyIndicator.hide();
 					}
 				});
-
 			}
-			sap.ui.core.BusyIndicator.hide();
 		},
 
 		onLiveChangeAddComment: function(oEvent) {
