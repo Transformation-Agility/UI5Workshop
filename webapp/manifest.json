@@ -14,8 +14,8 @@
 			"version": "0.0.0"
 		},
 		"dataSources": {
-			"ZAC_WS_TEST_SRV": {
-				"uri": "/sap/opu/odata/sap/ZAC_WS_TEST_SRV/",
+			"ZWS_DEMO_SRV": {
+				"uri": "/sap/opu/odata/sap/ZWS_DEMO_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -76,7 +76,7 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "ZAC_WS_TEST_SRV",
+				"dataSource": "ZWS_DEMO_SRV",
 				"preload": true
 			}
 		},

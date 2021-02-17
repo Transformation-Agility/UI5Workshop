@@ -6,8 +6,9 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("ZWS_COMMENT_DEMO.controller.Comment", {
-	onInit: function() {
-			this._loadComments("005056B7147D1EDABFB002A4A695D316");
+		onInit: function() {
+			var sWorkPackId = this.getView().byId("inputWorkPack").getValue();
+			this._loadComments(sWorkPackId);
 		},
 
 		onDeleteItem: function(oEvent) {
@@ -47,11 +48,10 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 		
 			if (!sWorkPackId) {
-				var msg = "Please fill Workpack field!";
-				MessageToast.show(msg);
+				MessageToast.show(oBundle.getText("commentEmptyWorkpack"));
 			} else {
 				sap.ui.core.BusyIndicator.show();
-				oModel.remove("/CommentFMSet(WorkPackId='" + sWorkPackId + "',CommentNo=1)", {
+				oModel.remove("/CommentSet(WorkPackId='" + sWorkPackId + "',CommentNo=1)", {
 					method: "DELETE",
 					success: function(data) {
 						var oEntry;
@@ -65,8 +65,7 @@ sap.ui.define([
 							oEntry.CommentNo = parseInt(i) + 1;
 							oEntry.CommentTxt = aList[i].getProperty("label");
 
-							//oModel.setHeaders({"content-type" : "application/json;charset=utf-8"});
-							oModel.create('/CommentFMSet', oEntry, mParameters);
+							oModel.create('/CommentSet', oEntry, mParameters);
 						}
 						mParameters = {batchGroupId:"batchGroup"};
 						oModel.submitChanges(mParameters);
@@ -92,7 +91,7 @@ sap.ui.define([
 			var oResults = [];
 
 			var oModel = this.getOwnerComponent().getModel();
-			oModel.read("/CommentFMSet", {
+			oModel.read("/CommentSet", {
 				urlParameters: {
 					"$filter": sFilter
 				},
