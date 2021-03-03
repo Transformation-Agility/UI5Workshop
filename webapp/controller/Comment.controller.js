@@ -8,7 +8,11 @@ sap.ui.define([
 	return Controller.extend("ZWS_COMMENT_DEMO.controller.Comment", {
 		onInit: function() {
 			var sWorkPackId = this.getView().byId("inputWorkPack").getValue();
-			this._loadComments(sWorkPackId);
+			
+			//Bonus task 3
+			this.getView().addEventDelegate({onsapenter: this.onPressAddComment }, this);
+			//Bonus task 4, second parameter
+			this._loadComments(sWorkPackId, '');
 		},
 
 		onDeleteItem: function(oEvent) {
@@ -19,13 +23,19 @@ sap.ui.define([
 			var oInputWorkPackId = this.getView().byId("inputWorkPack");
 			var sWorkPackId = oInputWorkPackId.getValue();
 			var oListComment = this.getView().byId("listComment");
+			
+			//Bonus task 4
+			var oInputCommentTxt = this.getView().byId("inputCommentTxt");
+			var sCommentTxt = oInputCommentTxt.getValue();
 
 			oListComment.removeAllItems();
-			this._loadComments(sWorkPackId);
+			//Bonus task 4, second parameter
+			this._loadComments(sWorkPackId, sCommentTxt);
 		},
 
 		onPressAddComment: function(oEvent) {
 			var oInputAddComment = this.getView().byId("inputAddComment");
+			//Bonus task 2
 			var oButtonAddComment = this.getView().byId("buttonAddComment");
 
 			var sCommentTxt = oInputAddComment.getValue();
@@ -34,6 +44,7 @@ sap.ui.define([
 				var id = Date.now();
 
 				this._addComment(sCommentTxt, id);
+				//Bonus task 2
 				oInputAddComment.setValue("");
 				oButtonAddComment.setEnabled(false);
 			}
@@ -81,15 +92,20 @@ sap.ui.define([
 			}
 		},
 
+		//Bonus task 2
 		onLiveChangeAddComment: function(oEvent) {
 			var oButtonAddComment = this.getView().byId("buttonAddComment");
 			oButtonAddComment.setEnabled(!!oEvent.getParameter("value"));
 		},
 
-		_loadComments: function(workPackId) {
-			var sFilter = "WorkPackId eq '" + workPackId + "'";
+		_loadComments: function(workPackId, commentText) {
 			var oResults = [];
-
+			var sFilter = "WorkPackId eq '" + workPackId + "'";
+			//Bonus task 4
+			if( commentText !== ''){
+				sFilter = sFilter + " and CommentTxt eq '" + commentText + "'";
+			}
+			
 			var oModel = this.getOwnerComponent().getModel();
 			oModel.read("/CommentSet", {
 				urlParameters: {

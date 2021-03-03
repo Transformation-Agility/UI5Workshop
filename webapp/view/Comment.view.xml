@@ -6,6 +6,7 @@
 				<content>
 					<HBox>
 						<Input value="005056B7147D1EDABFB002A4A695D316" placeholder="{i18n>inputPHWorkpack}" id="inputWorkPack" width="100%"/>
+						<Input placeholder="{i18n>inputPHCommentTxt}" id="inputCommentTxt" width="100%"/>
 						<Button text="{i18n>btnTxtGo}" id="btnGo" press="onPressGo"/>
 					</HBox>
 					<Button text="{i18n>btnTxtSave}" id="btnSave" press="onPressSave"/>
